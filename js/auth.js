@@ -1,45 +1,52 @@
-// Select the login form
-const loginForm = document.getElementById("login-form");
-const messageEl = document.getElementById("message");
+// export function checkAuth() {
+//   const user = localStorage.getItem("user");
+//   if (!user) {
+//       window.location.href = "../public/login.html";
+//   }
+// }
 
-
-// Listen for the form submit event
-loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    console.log('123')
-
-  // Get the email and password from the form
+// Hàm đăng nhập
+export async function login(event) {
+  event.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  // Send a POST request to the login API
   try {
-    const response = await fetch("http://localhost/company-management-php/api/functions/auth.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+      const response = await fetch("http://localhost/company-management-php/api/functions/auth.php", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      // Display success message
-      messageEl.textContent = "Login successful!";
-      messageEl.style.color = "green";
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      // Optionally, redirect to a dashboard page
-      window.location.href = "./index.html";
-    } else {
-      // Display error message
-      messageEl.textContent = data.message;
-      messageEl.style.color = "red";
-    }
+      if (response.ok) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+          window.location.href = "./index.html"; // Redirect to dashboard
+      } else {
+          console.error(data.message);
+      }
   } catch (error) {
-    console.error("Error:", error);
-    messageEl.textContent = "Something went wrong. Please try again.";
-    messageEl.style.color = "red";
+      console.error("Error:", error);
   }
-});
+}
+
+// Hàm đăng xuất
+function logout() {
+  fetch('http://localhost/company-management-php/api/functions/logout.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.json())
+  .then(data => {
+      if (data.status === 'success') {
+          localStorage.removeItem("user");
+          window.location.href = 'login.html';
+      } else {
+          console.error(data.message);
+      }
+  })
+  .catch(error => console.error('Error:', error));
+}
