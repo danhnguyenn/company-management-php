@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <img src="./assets/img/logo.png" alt="Logo Công ty">
+        </div>
+        <nav class="header__nav">
+            <ul>
+                <li><a href="" class="header__nav__link header__nav--primary">Trang chủ</a></li>
+                <li><a href="" class="header__nav__link header__nav--primary">Vê chúng tôi</a></li>
+                <li><a href="" class="header__nav__link header__nav--primary">Liên hệ</a></li>
+                <li><a href="" class="header__nav__link header__nav--primary">Ngôn ngữ</a></li>
+                <select name="" id="">
+                    <option value="" selected>Tiếng Việt</option>
+                    <option value="" selected>Tiếng Anh</option>
+                </select>
+                <li><a href="" class="header__nav__link header__nav--primary">Đăng nhập</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="login">
+        <section>
+            <div class="login__label">Đăng nhập</div>
+            <hr/>
+            <div class="login__form">
+                <form action="" id="login-form" method="post">
+                    <div class="login__form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="email" id="email" class="login__form-input">
+                    </div>
+                    <div class="login__form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="login__form-input">
+                    </div>
+                    <button type="submit" class="btn btn--primary">Đăng nhập</button>
+                </form>
+                <p id="message"></p>
+            </div>
+            
+            <a href="/forgot-password.html" class="login__link">Quên mật khẩu</a>
+        </section>
+    </main>    
+</body>
+<script src="../js/auth.js"></script>
+</html>

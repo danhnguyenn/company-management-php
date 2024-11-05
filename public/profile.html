@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thông tin cá nhân</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__logo header-three">
+        <img src="./assets/img/logo.png" alt="Logo Công ty" />
+      </div>
+      <form action="" class="header__form-group">
+        <input
+          type="password"
+          name="username"
+          id="username"
+          class="header__form-search"
+          placeholder="Tìm kiếm"
+        />
+        <div class="header__icon-search">
+          <span>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </span>
+        </div>
+      </form>
+    </header>
+    <hr>
+    <article class="container">
+      <div class="sidebar">
+        <div class="sidebar__avatar">
+          <img src="./assets/img/logo.png" alt="" class="" />
+            <h6>Nhân viên A</h6>
+        </div>
+        <nav class="sidebar__menu">
+          <a href="#" class="sidebar__menu-item btn btn--active">Thông tin cá nhân</a>
+          <a href="check-in-out.html" class="btn sidebar__menu-item ">Check in/ Check out</a>
+          <a href="/timekeeping-history.html" class="btn sidebar__menu-item">Lịch sử chấm công</a>
+          <a href="./timekeeping-report.html" class="btn sidebar__menu-item">Báo cáo lỗi chấm công</a>
+          <a href="" class="btn sidebar__menu-item">Đăng ký nghĩ phép</a>
+          <a href="" class="btn sidebar__menu-item">Đăng xuất</a>
+        </nav>
+      </div>
+      <main class="content">
+        <fieldset>
+            <legend>Chỉnh sửa thông tin cá nhân:</legend>
+            <a href="/enter-code.html" class="btn btn--primary">Cập nhật thông tin cá nhân</a>
+            <div class="profile__row">
+                <div class="login__form-group">
+                    <label for="fullname">Họ và tên</label>
+                    <input type="text" name="fullname" id="fullname" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="id">Mã Nhân viên</label>
+                    <input type="text" name="id" id="id" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="status">Tình trạng hôn nhân</label>
+                    <input type="text" name="status" id="status" class="login__form-input">
+                </div>
+            </div>
+            <div class="profile__row">
+                <div class="login__form-group">
+                    <label for="dateOfBirth">Ngày sinh</label>
+                    <input type="date" name="dateOfBirth" id="dateOfBirth" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="gender">Giới tính</label>
+                    <input type="text" name="gender" id="gender" class="login__form-input">
+                </div>
+            </div>
+            <div class="profile__row">
+                <div class="login__form-group">
+                    <label for="cccd">CMND/CCCD</label>
+                    <input type="text" name="cccd" id="cccd" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="date">Ngày cấp</label>
+                    <input type="date" name="date" id="date" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="place">Nơi cấp</label>
+                    <input type="text" name="place" id="place" class="login__form-input">
+                </div>
+            </div>
+            <div class="profile__row">
+                <div class="login__form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="numberphone">Số điện thoại</label>
+                    <input type="number" name="numberphone" id="numberphone" class="login__form-input">
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Địa chỉ</legend>
+            <div class="profile__row">
+                <div class="login__form-group">
+                    <label for="cccd">Quê quán</label>
+                    <input type="text" name="cccd" id="cccd" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="text">Nơi sinh</label>
+                    <input type="text" name="text" id="text" class="login__form-input">
+                </div>
+                <div class="login__form-group">
+                    <label for="place">Quốc tịch</label>
+                    <input type="text" name="place" id="place" class="login__form-input">
+                </div>
+            </div>
+        </fieldset>
+      </main>
+    </article>
+  </body>
+</html>
