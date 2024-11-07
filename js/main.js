@@ -1,5 +1,5 @@
 // Import các chức năng từ các tệp khác
-import {  login } from './auth.js';
+import {  login, forgotPassword } from './auth.js';
 import { loadHeader } from './header.js';
 
 
@@ -10,3 +10,9 @@ if (loginForm) {
     loginForm.addEventListener("submit", login);
 }
 
+
+const forgotForm = document.getElementById("confirm-forgot-form");
+
+if (forgotForm) {
+    forgotForm.addEventListener("submit", forgotPassword);
+}

@@ -5,6 +5,8 @@
 //   }
 // }
 
+const API_ENDPOINT = 'http://localhost/company-management-php/api/functions'
+
 // Hàm đăng nhập
 export async function login(event) {
   event.preventDefault();
@@ -12,7 +14,7 @@ export async function login(event) {
   const password = document.getElementById("password").value;
 
   try {
-      const response = await fetch("http://localhost/company-management-php/api/functions/auth.php", {
+      const response = await fetch(`${API_ENDPOINT}/auth.php`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -35,7 +37,7 @@ export async function login(event) {
 
 // Hàm đăng xuất
 export function logout() {
-  fetch('http://localhost/company-management-php/api/functions/logout.php', {
+  fetch(`${API_ENDPOINT}/logout.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
   })
@@ -49,5 +51,63 @@ export function logout() {
       }
   })
   .catch(error => console.error('Error:', error));
+}
+
+// Gọi API Forgot Password
+export async function forgotPassword(event) {
+    event.preventDefault();
+    const email = document.getElementById("email").value;
+
+    console.log('email', email );
+
+    try {
+        // Gửi yêu cầu đến API với async/await
+        const res = await fetch(`${API_ENDPOINT}/forgot_password.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+
+        if (!res.ok) {
+            // Nếu phản hồi không hợp lệ, ném lỗi
+            throw new Error('Failed to send request');
+        }
+
+        const data = await res.json();
+
+        if (data.status === "success") {
+            console.log('Data:', data);
+            console.log(data.message);
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Đã xảy ra lỗi, vui lòng thử lại.");
+    }
+}
+
+
+// Gọi API Reset Password
+function resetPassword() {
+    const otp = document.getElementById("otp").value;
+    const newPassword = document.getElementById("new_password").value;
+
+    fetch('reset_password.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `otp=${otp}&new_password=${newPassword}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
