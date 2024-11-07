@@ -52,10 +52,7 @@ a{
     border-radius: 10px;
 }
 
-.header__nav__link.active{
-    color: white;
-    background-color: #0d6efd;
-}
+
 
 .header__nav--primary, .btn--primary, .btn--active{
     color: white;
@@ -340,4 +337,9 @@ textarea:focus {
 
 textarea::placeholder {
     color: #000;
+}
+
+.header__nav__link.active{
+    color: white;
+    background-color: #0d6efd;
 }

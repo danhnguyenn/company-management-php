@@ -34,7 +34,7 @@ export async function login(event) {
 }
 
 // Hàm đăng xuất
-function logout() {
+export function logout() {
   fetch('http://localhost/company-management-php/api/functions/logout.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
@@ -50,3 +50,4 @@ function logout() {
   })
   .catch(error => console.error('Error:', error));
 }
+
