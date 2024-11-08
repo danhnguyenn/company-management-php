@@ -1,24 +1,31 @@
 <?php
-// Kiểm tra nếu người dùng gửi yêu cầu quên mật khẩu
+// Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Đọc dữ liệu JSON từ client
+    // Read JSON data from client
     $input = file_get_contents("php://input");
     $data = json_decode($input, true);
 
-    // Kiểm tra nếu email tồn tại trong dữ liệu JSON
+    // Validate email
     if (!isset($data['email']) || empty($data['email'])) {
+        http_response_code(400); // Trạng thái lỗi 400 cho email không hợp lệ
         echo json_encode(["status" => "error", "message" => "Email không hợp lệ."]);
         exit;
     }
 
     $email = $data['email'];
 
-    // Kết nối tới cơ sở dữ liệu (sử dụng PDO như đã trình bày trước đó)
+    // Connect to the database
     require_once '../config.php';
-    $database = new Database();
-    $conn = $database->connect();
+    try {
+        $database = new Database();
+        $conn = $database->connect();
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(["status" => "error", "message" => "Không thể kết nối cơ sở dữ liệu: " . $e->getMessage()]);
+        exit;
+    }
 
-    // Kiểm tra email trong cơ sở dữ liệu
+    // Check if email exists in the database
     $stmt = $conn->prepare("SELECT user_id, email FROM Users WHERE email = :email");
     $stmt->bindParam(':email', $email);
     $stmt->execute();
@@ -26,33 +33,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Tạo mã OTP ngẫu nhiên
+        // Generate a random OTP
         $otp = rand(100000, 999999);
 
-        //Lưu mã OTP vào cơ sở dữ liệu
+        // Save the OTP in the database
         $updateStmt = $conn->prepare("UPDATE Users SET otp = :otp WHERE user_id = :user_id");
         $updateStmt->bindParam(':otp', $otp);
         $updateStmt->bindParam(':user_id', $user['user_id']);
         $updateStmt->execute();
 
-        // Gửi OTP qua email
+        // Email details
         $subject = 'Mã OTP khôi phục mật khẩu';
-        $message = 'Mã OTP của bạn là: ' . $otp;
-        $headers = 'From: your-email@gmail.com' . "\r\n" .
-                   'Reply-To: your-email@gmail.com' . "\r\n" .
-                   'X-Mailer: PHP/' . phpversion();
+        $body = 'Mã OTP của bạn là: ' .'<b>' . $otp . '</b>';
 
-        // Gửi email
-        if (mail($user['email'], $subject, $message, $headers)) {
-            echo json_encode(["status" => "success", "message" => "Mã OTP đã được gửi đến email của bạn."]);
-        } else {
-            echo json_encode(["status" => "error", "message" => "Không thể gửi email."]);
+        // Use the Mailer class
+        require_once '../../mail/mailer.php';
+        $mailer = new Mailer();
+
+        try {
+            if ($mailer->sendEmail($user['email'], $subject, $body)) {
+                http_response_code(200);  // Success response code
+                echo json_encode(["status" => "success", "message" => "Mã OTP đã được gửi đến email của bạn."]);
+            } else {
+                http_response_code(500); // Server error if email sending fails
+                echo json_encode(["status" => "error", "message" => "Không thể gửi email."]);
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(["status" => "error", "message" => "Lỗi khi gửi email: " . $e->getMessage()]);
         }
     } else {
+        http_response_code(422);
         echo json_encode(["status" => "error", "message" => "Email không tồn tại trong hệ thống."]);
     }
-
-    // Đóng kết nối
-    $database->close();
 }
 ?>
